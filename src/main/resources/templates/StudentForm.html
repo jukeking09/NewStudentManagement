@@ -8,9 +8,28 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .logout-btn {
+            background-color: #dc3545; /* Bootstrap Danger Color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-4">
+    <div class="d-flex justify-content-end mb-4">
+        <form method="POST" th:action="@{/logout}">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
     <h1>Student Form</h1>
     <form method="POST" th:action="@{${newStudent} ? '/saveStudent' : '/updateStudent'}" th:object="${student}">
         <input type="hidden" th:field="*{studentId}">
@@ -42,7 +61,7 @@
         </div>
         <div class="form-group">
             <div th:if="${newStudent}">
-                <input type = "hidden" id="newStudent" value="new">
+                <input type="hidden" id="newStudent" value="new">
                 <button type="submit" class="btn btn-primary">Add Student</button>
             </div>
             <div th:if="${not newStudent}">

@@ -1,5 +1,6 @@
 package com.zach.NewStudentManagement.controller;
 
+import com.zach.NewStudentManagement.helper.AuthenticationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.zach.NewStudentManagement.model.User;
@@ -26,6 +27,9 @@ public class authController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
+        if (AuthenticationHelper.authenticated()) {
+            return "redirect:/createStudent";
+        }
         logger.info("Accessing login page");
         model.addAttribute("user", new User());
         return "RegisterLogin";
