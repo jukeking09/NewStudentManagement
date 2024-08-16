@@ -27,12 +27,6 @@ public class UserLoginUserDetails implements UserDetails{
 	public UserLoginUserDetails(User userLogin) {
 		username = userLogin.getEmail();
 		password = userLogin.getPassword();
-//		authorities = Arrays.stream(
-//				userLogin.getRoleid().getRolecode().split(",")) //changed getRolename to getRoleCode
-//				.map(SimpleGrantedAuthority::new)
-//				.collect(Collectors.toList());
-//
-//		System.out.println("ROLE OF CURRENT USER:"+authorities);
 	}
 
 	@Override

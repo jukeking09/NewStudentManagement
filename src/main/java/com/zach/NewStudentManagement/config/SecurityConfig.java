@@ -48,11 +48,9 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
                 .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers("/resources/**", "/static/**", "/assets/**", "/css/**", "img/**", "js/**", "jquery-3.6.0/**").permitAll()
-//                        .requestMatchers("/login", "test", "/register").permitAll() //,"/","/about"
-                        //						.requestMatchers().permitAll()
+                        .requestMatchers("/resources/**", "/static/**", "/assets/**", "/css/**", "img/**", "js/**", "jquery-3.6.0/**").permitAll()
+                        .requestMatchers("/login", "test", "/register").permitAll() //,"/","/about"
                         .anyRequest()
-                        //.permitAll()
                         .authenticated()
                 )
                 .formLogin((login) -> login

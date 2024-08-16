@@ -25,7 +25,6 @@ public class UserLoginDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// Fetch the user by email
 		Optional<User> userLogin = (userLoginRepo.findByEmail(username));
 
 		System.out.println("username "+username+" userlogin "+userLogin);

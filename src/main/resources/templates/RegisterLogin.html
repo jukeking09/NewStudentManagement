@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Authentication</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .modal-content {
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        }
         .toggle-btn {
             cursor: pointer;
             color: blue;
@@ -18,44 +29,46 @@
     </style>
 </head>
 <body>
-<div class="container mt-4">
-    <div id="auth-container">
-        <h1 id="form-title">Login</h1>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div id="auth-container">
+            <h1 id="form-title" class="text-center">Login</h1>
 
-        <!-- Login Form -->
-        <form id="login-form" method="POST" th:action="@{/login}">
-            <div class="form-group">
-                <label for="login-email">Email:</label>
-                <input type="email" class="form-control" id="login-email" name="username" required/>
-            </div>
-            <div class="form-group">
-                <label for="login-password">Password:</label>
-                <input type="password" class="form-control" id="login-password" name="password" required/>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+            <!-- Login Form -->
+            <form id="login-form" method="POST" th:action="@{/login}">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" class="form-control" id="login-email" name="username" required/>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" class="form-control" id="login-password" name="password" required/>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
 
-        <!-- Register Form -->
-        <form id="register-form" method="POST" th:action="@{/register}" style="display: none;" th:object="${user}">
-            <div class="form-group">
-                <label for="register-username">Name:</label>
-                <input type="text" class="form-control" id="register-username" name="username" th:field="*{username}" required/>
-            </div>
-            <div class="form-group">
-                <label for="register-email">Email:</label>
-                <input type="email" class="form-control" id="register-email" name="email" th:field="*{email}" required/>
-            </div>
-            <div class="form-group">
-                <label for="register-password">Password:</label>
-                <input type="password" class="form-control" id="register-password" name="password" th:field="*{password}" required/>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+            <!-- Register Form -->
+            <form id="register-form" method="POST" th:action="@{/register}" style="display: none;" th:object="${user}">
+                <div class="form-group">
+                    <label for="register-username">Name:</label>
+                    <input type="text" class="form-control" id="register-username" name="username" th:field="*{username}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" class="form-control" id="register-email" name="email" th:field="*{email}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password:</label>
+                    <input type="password" class="form-control" id="register-password" name="password" th:field="*{password}" required/>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
 
-        <p class="mt-3">
-            <span id="toggle-text">Don't have an account?</span>
-            <span id="toggle-btn" class="toggle-btn">Register here</span>
-        </p>
+            <p class="mt-3 text-center">
+                <span id="toggle-text">Don't have an account?</span>
+                <span id="toggle-btn" class="toggle-btn">Register here</span>
+            </p>
+        </div>
     </div>
 </div>
 

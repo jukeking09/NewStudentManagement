@@ -35,34 +35,6 @@ public class authController {
         return "RegisterLogin";
     }
 
-//    @PostMapping("/login")
-//    public String loginUser(@Valid User user, BindingResult result, Model model) {
-//        logger.info("Attempting to log in user with email: {}", user.getEmail());
-//
-//        if (result.hasErrors()) {
-//            logger.warn("Login form has errors");
-//            return "RegisterLogin";
-//        }
-//
-//        // Authenticate the user based on email and password
-//        Optional<User> existingUserOpt = userService.findByEmail(user.getEmail());
-//        if (existingUserOpt.isPresent()) {
-//            User existingUser = existingUserOpt.get();
-//            if (passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-//                logger.info("User authenticated successfully: {}", user.getEmail());
-//                return "redirect:/createStudent";  // Redirect to dashboard after successful login
-//            } else {
-//                logger.warn("Password mismatch for user: {}", user.getEmail());
-//            }
-//        } else {
-//            logger.warn("User not found with email: {}", user.getEmail());
-//        }
-//
-//        // If authentication fails
-//        model.addAttribute("loginError", "Invalid email or password");
-//        return "RegisterLogin";
-//    }
-
     @PostMapping("/register")
     public String registerUser(@Valid User user, BindingResult result, Model model) {
         logger.info("Attempting to register user with email: {}", user.getEmail());
