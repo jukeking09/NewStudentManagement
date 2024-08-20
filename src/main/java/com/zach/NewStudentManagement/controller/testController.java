@@ -7,7 +7,7 @@
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.RestController;
-//import com.zach.NewStudentManagement.model.course;
+//import com.zach.NewStudentManagement.model.Course;
 //import com.zach.NewStudentManagement.service.courseService;
 //
 //import java.util.Set;

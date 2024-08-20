@@ -30,35 +30,38 @@ public class studentController {
     subjectService subjectService;
 
     @PostMapping("/saveStudent")
-    public String saveStudent(@ModelAttribute("student") Student student){
-
-        studentService.createStudent(student);
-        List<Student> students = studentService.getAllStudents();
-        return "redirect:/createStudent";
+    @ResponseBody
+    public ResponseEntity<String> saveStudent(@ModelAttribute("student") Student student) {
+        try {
+            studentService.createStudent(student);
+            return ResponseEntity.ok("Student saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error saving student");
+        }
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@ModelAttribute("student") Student student){
-
-        studentService.updateStudent(student);
-        List<Student> students = studentService.getAllStudents();
-        return "redirect:/createStudent";
+    @ResponseBody
+    public ResponseEntity<String> updateStudent(@ModelAttribute("student") Student student) {
+        try {
+            studentService.updateStudent(student);
+            return ResponseEntity.ok("Student updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error updating student");
+        }
     }
+
 
     @GetMapping("/createStudent")
     public String createStudent(Model model) {
         try {
-            System.out.println("CREATE");
             if (AuthenticationHelper.authenticated()) {
-                System.out.println("AUTHENTICATED!");
-            Student newStudent = new Student();
-        List<Course> courseList = courseService.getAllCourses();
-        model.addAttribute("student", newStudent);
-        model.addAttribute("newStudent", true);
-        model.addAttribute("courses", courseList );
-        List<Student> students = studentService.getAllStudents();
-        model.addAttribute("listStudents", students);
-        return "StudentForm";}
+                Student newStudent = new Student();
+                List<Course> courseList = courseService.getAllCourses();
+                model.addAttribute("student", newStudent);
+                model.addAttribute("courses", courseList );
+                return "StudentForm";
+            }
         } catch (Exception e) {
             return "redirect:/login?logout";
         }
@@ -68,42 +71,33 @@ public class studentController {
     @GetMapping("/subjectList/{course_id}")
     public ResponseEntity<Set<Subject>> getSubjectsByCourseId(@PathVariable("course_id") Long courseId) {
         try {
-            System.out.println("inside");
-//            Course course = courseService.getCourseById(courseId).get();
-//            System.out.println("tostring:"+course.toString());
-//            if (course == null) {
-//                System.out.println("notFound");
-//                return ResponseEntity.notFound().build();
-//            }
-            System.out.println(courseId);
             Set<Subject> subjects = courseService.getSubjectsByCourseId(courseId);
-            System.out.println(subjects.toString());
             return ResponseEntity.ok(subjects);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    @GetMapping("/edit/{id}")
-    public String editStudent(@PathVariable Long id, Model model) {
-        Optional<Student> student = Optional.of(studentService.getStudentById(id).get());
-        model.addAttribute("student", student);
-        model.addAttribute("courses", courseService.getAllCourses());
-        List<Student> students = studentService.getAllStudents();
-        model.addAttribute("listStudents", students);
-        model.addAttribute("newStudent", false);
-        return "StudentForm";
+    @GetMapping("/getStudent/{id}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+        Optional<Student> student = studentService.getStudentById(id);
+        return student.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    @GetMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable Long id) {
+    @GetMapping("/deleteStudentAjax/{id}")
+    public ResponseEntity<String> deleteStudentAjax(@PathVariable Long id) {
+        System.out.println("inside delete");
         studentService.deleteStudent(id);
-        return "redirect:/createStudent";
+        return ResponseEntity.ok("Student deleted successfully");
     }
 
     @GetMapping("/favicon.ico")
     @ResponseBody
     void returnNoFavicon() {
         // Do nothing - just return an empty response to prevent 404 errors
+    }
+    @GetMapping("/listStudentsAjax")
+    public ResponseEntity<List<Student>> listStudentsAjax() {
+        List<Student> students = studentService.getAllStudents();
+        return ResponseEntity.ok(students);
     }
 }
